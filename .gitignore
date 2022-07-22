@@ -4,4 +4,4 @@ __pycache__
 .coverage
 .gitlab-ci.yml
 pyvenv.cfg
-Scripts
+./Scripts
