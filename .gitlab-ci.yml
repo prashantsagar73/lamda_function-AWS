@@ -1,0 +1,72 @@
+# This file is a template, and might need editing before it works on your project.
+# To contribute improvements to CI/CD templates, please follow the Development guide at:
+# https://docs.gitlab.com/ee/development/cicd/templates.html
+# This specific template is located at:
+# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
+
+# This is a sample GitLab CI/CD configuration file that should run without any modifications.
+# It demonstrates a basic 3 stage CI/CD pipeline. Instead of real tests or scripts,
+# it uses echo commands to simulate the pipeline execution.
+#
+# A pipeline is composed of independent jobs that run scripts, grouped into stages.
+# Stages run in sequential order, but jobs within stages run in parallel.
+#
+# For more information, see: https://docs.gitlab.com/ee/ci/yaml/index.html#stages
+
+image: python:3.6-slim
+
+before_script:
+  - python -V
+
+stages:
+  - build
+  - lint
+  - test
+  - deploy
+
+build-job:
+  stage: build
+  script:
+    - echo "No venv required"
+    - echo "Each stage starts its own docker instance"
+    - echo "This step intended to produce build artifacts"
+    - echo "Then ship the artifacts to a location shared between stages"
+
+lint-job:
+  stage: lint
+  script:
+    - pip install -r requirements.txt
+    - echo "Linting unit tests..."
+    - pylint --disable=F0401 tests/*.py
+    - echo "Linting features..."
+    - pylint --disable=W0107 features/*.py
+
+unit-test-job:
+  stage: test
+  script:
+    - echo "Running unit tests..."
+    - pip install -r requirements.txt
+    - PYTHONPATH=. coverage run -m pytest tests/test_*.py
+    - RESULT=$(PYTHONPATH=. coverage report -m | grep TOTAL | sed 's/%//g')
+    - read -a strarr <<< "$RESULT"
+    - COV="${strarr[3]}"
+    - echo "Code coverage is $COV%"
+    - if [ "$COV" -lt 80 ]; then echo "Code coverage insufficient" && exit 1; fi
+
+feature-test-job:
+  stage: test
+  script:
+    - echo "Running feature tests..."
+    - pip install -r requirements.txt
+    - PYTHONPATH=. coverage run -m pytest features/test_*.py
+    - RESULT=$(PYTHONPATH=. coverage report -m | grep TOTAL | sed 's/%//g')
+    - read -a strarr <<< "$RESULT"
+    - COV="${strarr[3]}"
+    - echo "Code coverage is $COV%"
+    - if [ "$COV" -lt 80 ]; then echo "Code coverage insufficient" && exit 1; fi
+
+deploy-job:
+  stage: deploy
+  script:
+    - echo "Deploying application..."
+    - echo "Place deployment code here"
