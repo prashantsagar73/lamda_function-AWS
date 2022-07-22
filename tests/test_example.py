@@ -17,14 +17,3 @@ def test_high_coverage():
     that method resulting in high code coverage
     """
     assert fail_me() == 0
-
-
-# def test_low_coverage():
-#    """Do not call fail_me resulting in low code coverage"""
-#    i = 1
-#    assert i == 1
-
-
-# def test_fail_me():
-#     """Failing assert to test when pytest fails"""
-#     assert fail_me() == 1
