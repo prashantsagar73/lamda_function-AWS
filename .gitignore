@@ -1,4 +1,7 @@
 .idea
-venv
+env
 __pycache__
 .coverage
+.gitlab-ci.yml
+pyvenv.cfg
+Scripts
