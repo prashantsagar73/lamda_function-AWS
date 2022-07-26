@@ -5,6 +5,7 @@ from pytest_bdd import scenario, given, when, then
 
 context = {}
 
+
 @scenario('calculation.feature', 'One plus one')
 def test_calculation():
     """test method to link steps with scenario"""

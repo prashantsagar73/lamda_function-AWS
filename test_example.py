@@ -1,6 +1,3 @@
-"""
-Example test cases to test pytest, pylint and code coverage
-"""
 
 from example import pass_me
 from example import fail_me
