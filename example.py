@@ -11,10 +11,10 @@ def pass_me():
     return i
 
 
-def fail_me():
-    """
-    This method returns 0
-    """
-    i = 0
-    print("Another line of code")
-    return i
+# def fail_me():
+#     """
+#     This method returns 0
+#     """
+#     i = 0
+#     print("Another line of code")
+#     return i
